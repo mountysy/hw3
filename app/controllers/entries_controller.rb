@@ -1,11 +1,10 @@
 class EntriesController < ApplicationController
 
+
   def index
     @entries = Entry.all
-    # @place_name = Entry.find_by ({"place_id" => @place["id"]})
-    # @entry_title = @entries["title"]
-    # @entry_description = @entries["description"]
-    # @entry_date = @entries["ocurred_on"]
+    # @entry = Entry.find_by ({"id" => params["id"]})  
+    # @place = Place.find_by ({"id" => @entry["place_id"]})
   end
 
   def new
@@ -13,9 +12,15 @@ class EntriesController < ApplicationController
 
   def create
     @entry = Entry.new
+    
     @entry["title"] = params["title"]
     @entry["description"] = params["description"]
     @entry["occurred_on"] = params["date"]
+
+    @entry["place_id"] = params["place_id"]
+
+    @entry.save
+    redirect_to "/entries/#{@entry["place_id"]}"
   end
 
 end
